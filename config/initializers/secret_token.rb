@@ -9,4 +9,21 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-FilmsApp::Application.config.secret_key_base = 'a5d2b23be20f013b2a4f708c8d873630f52d9c544b1ce53b9c6a1a5b0021d7de32d999d5134e4920c4c12de1b6c22d1fd63ff8bf97683b3cb18944fb3627634b'
+require 'securerandom'
+
+def secure_token
+  token_file = Rails.root.join('.secret')
+  if File.exist?(token_file)
+    # Use the existing token.
+    File.read(token_file).chomp
+  else
+    # Generate a new token and store it in token_file.
+    token = SecureRandom.hex(64)
+    File.write(token_file, token)
+    token
+  end
+end
+
+FilmsApp::Application.config.secret_key_base = secure_token
+
+# FilmsApp::Application.config.secret_key_base = 'a5d2b23be20f013b2a4f708c8d873630f52d9c544b1ce53b9c6a1a5b0021d7de32d999d5134e4920c4c12de1b6c22d1fd63ff8bf97683b3cb18944fb3627634b'
