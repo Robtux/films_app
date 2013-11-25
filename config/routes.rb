@@ -2,17 +2,26 @@ FilmsApp::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   root  'static_pages#home'
+
   match '/registrati',  to: 'users#new',            	via: 'get'
   match '/accedi',  	to: 'sessions#new',         	via: 'get'
   match '/esci', 	to: 'sessions#destroy',     	via: 'delete'
   match '/help',    	to: 'static_pages#help',	via: 'get'
   match '/about',   	to: 'static_pages#about',	via: 'get'
   match '/contact', 	to: 'static_pages#contact',	via: 'get'  
+
   resources :directors
+  match '/directors',  	to: 'directors#index',       	via: 'get'  
+  match '/new_director',    to: 'directors#new',	via: 'get'
 
   resources :genres
+  match '/genres',    	to: 'genres#index',            	via: 'get'
+  match '/new_genre',  	to: 'genres#new',              	via: 'get'
 
   resources :films
+  match '/films',	to: 'films#index',		via: 'get'
+  match '/new_film',	to: 'films#new',		via: 'get'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

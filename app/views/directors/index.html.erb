@@ -1,31 +1,34 @@
 <h1>Listing directors</h1>
 
-<table>
+<table class="directors table table-striped table-hover">
   <thead>
     <tr>
       <th>Name</th>
-      <th>Surname</th>
       <th>Trivia</th>
+   <% if signed_in? %>
       <th></th>
       <th></th>
       <th></th>
+    <% end %>
     </tr>
   </thead>
 
   <tbody>
     <% @directors.each do |director| %>
       <tr>
-        <td><%= director.name %></td>
-        <td><%= director.surname %></td>
+        <td><%= director.surname %> <%= director.name %></td>
         <td><%= director.trivia %></td>
+      <% if signed_in? %>
         <td><%= link_to 'Show', director %></td>
         <td><%= link_to 'Edit', edit_director_path(director) %></td>
         <td><%= link_to 'Destroy', director, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Director', new_director_path %>
+<% if signed_in? %>
+  <%= link_to 'New Director', new_director_path %>
+<% end %>
